@@ -1,0 +1,12 @@
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-dotenv==1.0.0
+httpx==0.26.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Si l'installation echoue sur pydantic-core (ex. Python 3.14 sans Rust), utilisez
+# Python 3.11 ou 3.12, ou installez des versions avec roues binaires:
+#   pip install "pydantic>=2.10" "pydantic-settings>=2.6"
