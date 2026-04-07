@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables (will be set via docker-compose)
+.env
+
+# Documentation
+*.md
+README.md
+
+# Deployment configs
+render.yaml
+runtime.txt
+.env.example
+
+# Tests
+tests/
+*.test.py
+
+# Logs
+*.log
