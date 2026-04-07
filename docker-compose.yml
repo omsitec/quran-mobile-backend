@@ -4,19 +4,11 @@ services:
   quran-backend:
     build: .
     container_name: quran-mobile-backend
+    restart: unless-stopped
     ports:
       - "8000:8000"
-    environment:
-      - QURAN_API_CLIENT_ID=${QURAN_API_CLIENT_ID}
-      - QURAN_API_CLIENT_SECRET=${QURAN_API_CLIENT_SECRET}
-      - QURAN_API_OAUTH_ENDPOINT=${QURAN_API_OAUTH_ENDPOINT}
-      - QURAN_API_CONTENT_ENDPOINT=${QURAN_API_CONTENT_ENDPOINT}
-      - QURAN_API_OAUTH_SCOPES=${QURAN_API_OAUTH_SCOPES}
-      - CORS_ORIGINS=${CORS_ORIGINS}
-      - SECRET_KEY=${SECRET_KEY}
-    restart: unless-stopped
-    volumes:
-      - ./app:/app/app
+    env_file:
+      - .env
     networks:
       - quran-network
 

@@ -1,23 +1,20 @@
-# Backend FastAPI pour Quran Mobile
+# Image Python officielle
 FROM python:3.11-slim
 
 # Définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers de dépendances
+# Copier les fichiers requirements
 COPY requirements.txt .
 
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copier tout le code de l'application
-COPY ./app ./app
+# Copier le code de l'application
+COPY app/ ./app/
 
-# Exposer le port 8000
+# Exposer le port
 EXPOSE 8000
 
-# Variable d'environnement pour production
-ENV PYTHONUNBUFFERED=1
-
-# Commande pour démarrer l'application
+# Commande de démarrage
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

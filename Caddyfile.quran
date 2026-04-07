@@ -1,0 +1,18 @@
+# Configuration Caddy pour le backend Quran Mobile
+# À ajouter à votre Caddyfile existant
+
+quran-api.vmi3085423.contaboserver.net {
+    reverse_proxy quran-mobile-backend:8000
+    
+    # CORS headers
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+    }
+    
+    # Logs
+    log {
+        output file /var/log/caddy/quran-api.log
+    }
+}
