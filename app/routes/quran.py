@@ -33,10 +33,19 @@ async def get_chapter_verses(
     words: bool = True,
     per_page: int = 50,
 ):
-    """Récupérer les versets d'une sourate"""
+    """
+    Récupérer les versets d'une sourate avec texte Unicode normal
+    
+    NOUVEAU : Utilise une fusion de quran.com (texte Unicode) 
+    et Quran.Foundation (traductions)
+    """
     try:
-        return await quran_client.get_chapter_verses(
-            chapter_id, language, translations, words, per_page
+        # Utiliser la fusion pour obtenir du texte Unicode normal
+        return await qurancom_client.get_verses_merged(
+            chapter_id=chapter_id,
+            quran_foundation_client=quran_client,
+            language=language,
+            translations=translations or "131",
         )
     except httpx.HTTPStatusError as e:
         raise HTTPException(
@@ -57,9 +66,7 @@ async def get_chapter_verses_uthmani(
     Utilise l'API publique quran.com qui retourne du texte Unicode standard
     """
     try:
-        return await qurancom_client.get_verses_with_uthmani(
-            chapter_id, translations
-        )
+        return await qurancom_client.get_verses_with_uthmani(chapter_id)
     except httpx.HTTPStatusError as e:
         raise HTTPException(
             status_code=e.response.status_code,
