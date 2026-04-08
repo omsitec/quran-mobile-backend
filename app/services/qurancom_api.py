@@ -30,6 +30,7 @@ class QuranComAPI:
                 f"{self.BASE_URL}/verses/by_chapter/{chapter_id}",
                 params={
                     "words": "false",
+                    "fields": "text_uthmani",  # ← AJOUT DU PARAMÈTRE
                     "per_page": 300,  # Max pour récupérer toute la sourate
                 },
                 timeout=30.0,
@@ -84,19 +85,25 @@ class QuranComAPI:
             if verse_number in qf_verses_dict:
                 qf_verse = qf_verses_dict[verse_number]
                 
-                # Garder le texte Unicode de quran.com
-                verse["text_uthmani"] = verse.get("text_uthmani", "")
+                # Le text_uthmani est déjà dans verse (vient de quran.com)
+                # On garde tel quel
                 
                 # Ajouter les traductions de Quran.Foundation
                 verse["translations"] = qf_verse.get("translations", [])
                 
-                # Ajouter les métadonnées manquantes
-                verse["verse_key"] = qf_verse.get("verse_key", f"{chapter_id}:{verse_number}")
-                verse["hizb_number"] = qf_verse.get("hizb_number")
-                verse["rub_el_hizb_number"] = qf_verse.get("rub_el_hizb_number")
-                verse["ruku_number"] = qf_verse.get("ruku_number")
-                verse["manzil_number"] = qf_verse.get("manzil_number")
-                verse["sajdah_number"] = qf_verse.get("sajdah_number")
+                # Ajouter les métadonnées manquantes si absentes
+                if "verse_key" not in verse:
+                    verse["verse_key"] = qf_verse.get("verse_key", f"{chapter_id}:{verse_number}")
+                if "hizb_number" not in verse:
+                    verse["hizb_number"] = qf_verse.get("hizb_number")
+                if "rub_el_hizb_number" not in verse:
+                    verse["rub_el_hizb_number"] = qf_verse.get("rub_el_hizb_number")
+                if "ruku_number" not in verse:
+                    verse["ruku_number"] = qf_verse.get("ruku_number")
+                if "manzil_number" not in verse:
+                    verse["manzil_number"] = qf_verse.get("manzil_number")
+                if "sajdah_number" not in verse:
+                    verse["sajdah_number"] = qf_verse.get("sajdah_number")
             
             merged_verses.append(verse)
         
